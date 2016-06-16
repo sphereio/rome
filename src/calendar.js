@@ -23,6 +23,7 @@ function calendar (calendarOptions) {
   var monthOffsetAttribute = 'data-rome-offset';
   var weekdays;
   var weekdayCount;
+  var initMonth;
   var calendarMonths = [];
   var lastYear;
   var lastMonth;
@@ -262,6 +263,7 @@ function calendar (calendarOptions) {
   }
 
   function show () {
+    initMonth = ref.month() - 1;
     render();
     refresh();
     toggleTimeList(!o.date);
@@ -322,7 +324,7 @@ function calendar (calendarOptions) {
     bound = inRange(refCal.clone());
     ref = bound || ref;
     if (bound) { refCal = bound.clone(); }
-    update();
+    update(true);
     api.emit(op === 'add' ? 'next' : 'back', ref.month());
   }
 
@@ -360,6 +362,7 @@ function calendar (calendarOptions) {
 
   function updateCalendarSelection () {
     var day = refCal.date() - 1;
+    initMonth = refCal.month() - 1;
     selectDayElement(false);
     calendarMonths.forEach(function (cal) {
       var days;
@@ -505,7 +508,7 @@ function calendar (calendarOptions) {
           text: day.format(o.dayFormat),
           className: validationTest(day, data.cell.join(' ').split(' ')).join(' ')
         });
-        if (data.selectable && day.date() === current) {
+        if (data.selectable && day.date() === current && ref.month() === initMonth) {
           selectDayElement(node);
         }
       }

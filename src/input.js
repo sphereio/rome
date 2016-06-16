@@ -90,7 +90,7 @@ function inputCalendar (input, calendarOptions) {
 
   function invalidateInput () {
     if (!ignoreInvalidation && !isEmpty()) {
-      api.emitValues();
+      // api.emitValues();
     }
   }
 
